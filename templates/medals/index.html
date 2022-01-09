@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+{{ content|safe }}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Медали в спорте</title>
+  </head>
+  <body>
+    <h2>Страны</h2>
+    {% if countries.count > 0 %}
+    <ul>
+      {% for country in countries %}
+        <li><a href="country/{{country.id}}"><img src="{{ country.flag_path }}" height=12></img>{{ country.name }} ({{ country.count }})</a></li>
+          {% if country.get_regions.count > 0 %}
+            <ul>
+              {% for region in country.get_regions %}
+                <li><a href="region/{{region.id}}"><img src="{{ region.flag_path }}" height=12></img>{{ region.name }} ({{ region.count }})</a></li>
+                  {% if region.get_cities.count > 0 %}
+                    <ul>
+                      {% for city in region.get_cities %}
+                        <li><a href="city/{{city.id}}"><img src="{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+              {% endfor%}
+            </ul>
+          {% else %}
+            {% if country.get_cities.count > 0 %}
+              <ul>
+                {% for city in country.get_cities %}
+                  <li><a href="city/{{city.id}}"><img src="{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif%}
+
+    <h2>Организаторы</h2>
+      {% if orgs.count > 0 %}
+        <ul>
+          {% for org in orgs %}
+            <li><a href="{{org.website}}"><img src="{{ org.logo }}" height=12></img>{{ org.name }} ({{ org.count }})</a></li>
+            {% if org.get_series.count > 0 %}
+              <ul>
+                {% for seria in org.get_series %}
+                  <li><a href="series/{{seria.id}}"><img src="{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+    <h2>Виды спорта</h2>
+    {% if sports.count > 0 %}
+      <ul>
+        {% for sport in sports %}
+          <li><a href="sports/{{sport.id}}"><img src="{{ sport.logo }}" height=12></img>{{ sport.name }} ({{ sport.count }})</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </body>
+</html>
