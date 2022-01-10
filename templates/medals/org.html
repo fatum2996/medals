@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Медали организатора {{org.name}}</title>
+</head>
+<body>
+  <h2><img src="../{{ org.logo }}" height=18></img>{{org.name}}</h2>
+    {% if org.get_series.count > 0 %}
+      <ul>
+        {% for seria in org.get_series %}
+          {% if seria.logo %}
+            <li><a href="seies/{{seria.id}}"><img src="../{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
+          {% else %}
+            <li><a href="seies/{{seria.id}}">{{ seria.name }} ({{ seria.count }})</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+<h2>Медали</h2>
+{% if medals.count > 0 %}
+  {% for medal in medals %}
+      <div>
+        <img src="../{{ medal.photo}}" alt="" height=250>
+        <h4>{{medal.name}}</h4>
+        <p>{{medal.date}}</p>
+        <p>{{medal.sport}}, {{medal.distance}}</p>
+      </div>
+  {% endfor %}
+{% endif %}
+</body>
+</html>
