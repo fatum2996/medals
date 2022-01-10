@@ -24,5 +24,11 @@ def region(request, id):
     medals = Medal.objects.filter(region = id).order_by('-date')
     return render(request, 'medals/region.html', context={"region": region, "medals": medals})
 
+def city(request, id):
+    #try:
+    city = City.objects.get(id=id)
+    medals = Medal.objects.filter(city = id).order_by('-date')
+    return render(request, 'medals/city.html', context={"city": city, "medals": medals})
+
 def about(request):
     return HttpResponse("Сайт о спортивных медалях")
