@@ -78,35 +78,37 @@ class Medal(models.Model):
     credentials = models.CharField(blank = True, max_length = 200, default='@fa_tum')
 
     def save(self, *args, **kwargs): #прописать вычитание при удалении!!!!
-        country_inc = Country.objects.get(name = self.country)
-        country_inc.count += 1
-        country_inc.save()
+        if self._state.adding:
+            country_inc = Country.objects.get(name = self.country)
+            country_inc.count += 1
+            country_inc.save()
 
-        if(self.region):
-            region_inc = Region.objects.get(name = self.region)
-            region_inc.count += 1
-            region_inc.save()
+            if(self.region):
+                region_inc = Region.objects.get(name = self.region)
+                region_inc.count += 1
+                region_inc.save()
 
-        city_inc = City.objects.get(name = self.city)
-        city_inc.count += 1
-        city_inc.save()
+            city_inc = City.objects.get(name = self.city)
+            city_inc.count += 1
+            city_inc.save()
 
-        if(self.org):
-            org_inc = Org.objects.get(name = self.org)
-            org_inc.count += 1
-            org_inc.save()
+            if(self.org):
+                org_inc = Org.objects.get(name = self.org)
+                org_inc.count += 1
+                org_inc.save()
 
-        if(self.series):
-            series_inc = Series.objects.get(name = self.series)
-            series_inc.count += 1
-            series_inc.save()
+            if(self.series):
+                series_inc = Series.objects.get(name = self.series)
+                series_inc.count += 1
+                series_inc.save()
 
-        if(self.sport):
-            sport_inc = Sport.objects.get(name = self.sport)
-            sport_inc.count += 1
-            sport_inc.save()
+            if(self.sport):
+                sport_inc = Sport.objects.get(name = self.sport)
+                sport_inc.count += 1
+                sport_inc.save()
 
         super().save(*args, **kwargs)  # Call the "real" save() method.
+
     def __str__(self):
         return self.name
 

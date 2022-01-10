@@ -11,9 +11,9 @@
       <ul>
         {% for seria in org.get_series %}
           {% if seria.logo %}
-            <li><a href="seies/{{seria.id}}"><img src="../{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
+            <li><a href="../series/{{seria.id}}"><img src="../{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
           {% else %}
-            <li><a href="seies/{{seria.id}}">{{ seria.name }} ({{ seria.count }})</a></li>
+            <li><a href="../series/{{seria.id}}">{{ seria.name }} ({{ seria.count }})</a></li>
           {% endif %}
         {% endfor %}
       </ul>
