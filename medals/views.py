@@ -18,7 +18,11 @@ def country(request, id):
     return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals})
     #except:
         #return HttpResponseNotFound("<h2>Person not found</h2>")
-
+def region(request, id):
+    #try:
+    region = Region.objects.get(id=id)
+    medals = Medal.objects.filter(region = id).order_by('-date')
+    return render(request, 'medals/region.html', context={"region": region, "medals": medals})
 
 def about(request):
     return HttpResponse("Сайт о спортивных медалях")

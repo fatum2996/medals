@@ -20,6 +20,7 @@ from medals import views
 urlpatterns = [
     path('', views.index),
     path('country/<int:id>', views.country),
+    path('region/<int:id>', views.region),
     path('about', views.about, name='about'),
     #path('regions', views.regions, name='regions'),
     path('admin/', admin.site.urls),
