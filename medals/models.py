@@ -74,8 +74,8 @@ class Medal(models.Model):
     photo = models.ImageField(upload_to='static/images/medals/')
     photo_second = models.ImageField(blank = True, upload_to='static/images/medals')
     likes = models.IntegerField(default = 0)
-    added_by = models.CharField(blank = True, max_length = 200)
-    credentials = models.CharField(blank = True, max_length = 200)
+    added_by = models.CharField(blank = True, max_length = 200, default='fatum')
+    credentials = models.CharField(blank = True, max_length = 200, default='@fa_tum')
 
     def save(self, *args, **kwargs): #прописать вычитание при удалении!!!!
         country_inc = Country.objects.get(name = self.country)

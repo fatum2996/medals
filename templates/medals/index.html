@@ -58,7 +58,7 @@
     {% if sports.count > 0 %}
       <ul>
         {% for sport in sports %}
-          <li><a href="sports/{{sport.id}}"><img src="{{ sport.logo }}" height=12></img>{{ sport.name }} ({{ sport.count }})</a></li>
+          <li><a href="sport/{{sport.id}}"><img src="{{ sport.logo }}" height=12></img>{{ sport.name }} ({{ sport.count }})</a></li>
         {% endfor %}
       </ul>
     {% endif %}

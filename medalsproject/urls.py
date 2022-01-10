@@ -23,7 +23,8 @@ urlpatterns = [
     path('region/<int:id>', views.region),
     path('city/<int:id>', views.city),
     path('org/<int:id>', views.org),
+    path('series/<int:id>', views.series),
+    path('sport/<int:id>', views.sport),
     path('about', views.about, name='about'),
-    #path('regions', views.regions, name='regions'),
     path('admin/', admin.site.urls),
 ]

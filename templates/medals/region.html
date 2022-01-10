@@ -6,11 +6,11 @@
   <title>Медали в регионе {{region.name}}</title>
 </head>
 <body>
-  <h2><img src="../{{ region.flag_path }}" height=18></img>{{region.name}}</h2>
+  <h2><img src="../{{ region.flag_path }}" height=50></img>{{region.name}}</h2>
     {% if region.get_cities.count > 0 %}
       <ul>
         {% for city in region.get_cities %}
-          <li><a href="city/{{city.id}}"><img src="../{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
+          <li><a href="../city/{{city.id}}"><img src="../{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
         {% endfor %}
       </ul>
     {% endif %}

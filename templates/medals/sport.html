@@ -3,10 +3,15 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Медали в городе {{city.name}}</title>
+  <title>Медали вида спорта {{sport.name}}</title>
 </head>
 <body>
-  <h2><img src="../{{ city.flag_path }}" height=50></img>{{city.name}}</h2>
+  {% if sport.logo %}
+    <h2><img src="../{{ sport.logo }}" height=50></img>{{ sport.name }}</h2>
+  {% else %}
+    <h2>{{ sport.name }}</h2>
+  {% endif %}
+
 <h2>Медали</h2>
 {% if medals.count > 0 %}
   {% for medal in medals %}

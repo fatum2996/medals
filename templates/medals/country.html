@@ -6,7 +6,7 @@
   <title>Медали в стране {{country.name}}</title>
 </head>
 <body>
-  <h2><img src="../{{ country.flag_path }}" height=18></img>{{country.name}}</h2>
+  <h2><img src="../{{ country.flag_path }}" height=50></img>{{country.name}}</h2>
     {% if regions.count > 0%}
       <ul>
         {% for region in regions %}
@@ -14,7 +14,7 @@
             {% if region.get_cities.count > 0 %}
               <ul>
                 {% for city in region.get_cities %}
-                  <li><a href="city/{{city.id}}"><img src="../{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
+                  <li><a href="../city/{{city.id}}"><img src="../{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
                 {% endfor %}
               </ul>
             {% endif %}
@@ -24,7 +24,7 @@
       {% if country.get_cities.count > 0 %}
         <ul>
           {% for city in country.get_cities %}
-            <li><a href="city/{{city.id}}"><img src="../{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
+            <li><a href="../city/{{city.id}}"><img src="../{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
           {% endfor %}
         </ul>
       {% endif %}
