@@ -9,9 +9,9 @@ class Country(models.Model):
     def __str__(self):
         return self.name
     def get_regions(self):
-        return self.region_set.all()
+        return self.region_set.all().order_by('-count', 'name')
     def get_cities(self):
-        return self.city_set.all()
+        return self.city_set.all().order_by('-count', 'name')
 
 class Region(models.Model):
     country = models.ForeignKey(Country, on_delete = models.CASCADE)
@@ -21,7 +21,7 @@ class Region(models.Model):
     def __str__(self):
         return self.name
     def get_cities(self):
-        return self.city_set.all()
+        return self.city_set.all().order_by('-count', 'name')
 
 class City(models.Model):
     country = models.ForeignKey(Country, on_delete = models.CASCADE)
@@ -41,7 +41,7 @@ class Org(models.Model):
     def __str__(self):
         return self.name
     def get_series(self):
-        return self.series_set.all()
+        return self.series_set.all().order_by('-count', 'name')
 
 class Series(models.Model):
     name = models.CharField(max_length = 200)

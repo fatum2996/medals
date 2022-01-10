@@ -4,10 +4,10 @@ from .models import Country, Region, City, Org, Series, Sport, Medal
 # Create your views here.
 
 def index(request):
-    countries = Country.objects.all()
-    regions = Region.objects.all()
-    orgs = Org.objects.all()
-    sports = Sport.objects.all()
+    countries = Country.objects.all().order_by('-count', 'name')
+    regions = Region.objects.all().order_by('-count', 'name')
+    orgs = Org.objects.all().order_by('-count', 'name')
+    sports = Sport.objects.all().order_by('-count', 'name')
     return render(request, 'medals/index.html', context={"countries": countries, "regions": regions, "orgs": orgs, "sports": sports, })
 
 def country(request, id):
