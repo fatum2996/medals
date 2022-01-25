@@ -8,7 +8,8 @@ def index(request):
     regions = Region.objects.all().order_by('-count', 'name')
     orgs = Org.objects.all().order_by('-count', 'name')
     sports = Sport.objects.all().order_by('-count', 'name')
-    return render(request, 'medals/index.html', context={"countries": countries, "regions": regions, "orgs": orgs, "sports": sports, })
+    medals = Medal.objects.all().order_by('-date')[:36]
+    return render(request, 'medals/index.html', context={"countries": countries, "regions": regions, "orgs": orgs, "sports": sports, "medals": medals})
 
 def country(request, id):
     country = Country.objects.get(id=id)
