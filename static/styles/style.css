@@ -1,0 +1,9 @@
+.card {
+  border-width: 0px;
+  border-radius: 25px;
+  background-color: Gainsboro;
+}
+
+.card-img-top {
+  border-radius: 23px;
+}
