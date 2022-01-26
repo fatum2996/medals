@@ -18,7 +18,7 @@ from django.urls import include, path
 from medals import views
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='index'),
     path('country/<int:id>', views.country),
     path('region/<int:id>', views.region),
     path('city/<int:id>', views.city),
