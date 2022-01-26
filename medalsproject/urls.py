@@ -27,4 +27,5 @@ urlpatterns = [
     path('sport/<int:id>', views.sport),
     path('about', views.about, name='about'),
     path('admin/', admin.site.urls),
+    path('chaining/', include('smart_selects.urls')),
 ]

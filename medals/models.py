@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.signals import pre_delete
+from smart_selects.db_fields import ChainedForeignKey
 
 # Create your models here.
 class Country(models.Model):
@@ -25,7 +26,13 @@ class Region(models.Model):
 
 class City(models.Model):
     country = models.ForeignKey(Country, on_delete = models.CASCADE)
-    region = models.ForeignKey(Region, on_delete = models.CASCADE, blank = True, null=True)
+    region = ChainedForeignKey(
+        Region,
+        chained_field = "country",
+        chained_model_field = "country",
+        show_all=False,
+        auto_choose=True,
+        sort=True)
     name = models.CharField(max_length = 200)
     count = models.IntegerField(default = 0)
     flag_path = models.ImageField(blank = True, upload_to='static/images/flags/cities')
@@ -62,10 +69,28 @@ class Sport(models.Model):
 
 class Medal(models.Model):
     country = models.ForeignKey(Country, on_delete = models.CASCADE)
-    region = models.ForeignKey(Region, on_delete = models.CASCADE, blank = True, null=True)
-    city = models.ForeignKey(City, on_delete = models.CASCADE)
+    region = ChainedForeignKey(
+        Region,
+        chained_field = "country",
+        chained_model_field = "country",
+        show_all=False,
+        auto_choose=True,
+        sort=True)
+    city = ChainedForeignKey(
+        City,
+        chained_field = "region",
+        chained_model_field = "region",
+        show_all=False,
+        auto_choose=True,
+        sort=True)
     sport = models.ForeignKey(Sport, on_delete = models.CASCADE, to_field='name', default='Бег')
-    series = models.ForeignKey(Series, on_delete = models.CASCADE, blank = True, null=True)
+    series = ChainedForeignKey(
+        Series,
+        chained_field = "org",
+        chained_model_field = "org",
+        show_all=False,
+        auto_choose=True,
+        sort=True)
     org = models.ForeignKey(Org, on_delete = models.CASCADE, blank = True, null=True)
     name = models.CharField(max_length = 200)
     date_added = models.DateField(auto_now = True)
