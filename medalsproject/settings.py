@@ -134,3 +134,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ALLOWED_HOSTS = ['*']
 
 USE_DJANGO_JQUERY = True
+
+USE_I18N = True
+USE_L10N = False
+
+LANGUAGE_CODE = 'ru-RU'
+
+# Пример вывода: 16 сентября 2012
+DATE_FORMAT = 'j E Y'
