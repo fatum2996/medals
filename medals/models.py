@@ -90,7 +90,8 @@ class Medal(models.Model):
         chained_model_field = "org",
         show_all=False,
         auto_choose=True,
-        sort=True)
+        sort=True,
+        blank=True, null=True,)
     org = models.ForeignKey(Org, on_delete = models.CASCADE, blank = True, null=True)
     name = models.CharField(max_length = 200)
     date_added = models.DateField(auto_now = True)
