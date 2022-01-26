@@ -1,14 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 from .models import Country, Region, City, Org, Series, Sport, Medal
 # Create your views here.
+
+
 
 def index(request):
     countries = Country.objects.all().order_by('-count', 'name')
     regions = Region.objects.all().order_by('-count', 'name')
     orgs = Org.objects.all().order_by('-count', 'name')
     sports = Sport.objects.all().order_by('-count', 'name')
-    medals = Medal.objects.all().order_by('-date')[:36]
+    medals_list = Medal.objects.all().order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/index.html', context={"countries": countries, "regions": regions, "orgs": orgs, "sports": sports, "medals": medals})
 
 def country(request, id):
