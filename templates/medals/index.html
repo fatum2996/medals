@@ -15,20 +15,23 @@
         <a class="btn" data-bs-toggle="collapse" href="#collapseCountries"><h2>Страны</h2></a>
         <div id="collapseCountries" class="collapse">
           {% if countries.count > 0 %}
-          <ul>
+          <ul class="list-unstyled">
             {% for country in countries %}
-              <li><a href="country/{{country.id}}"><img src="{{ country.flag_path }}" height=12></img>{{ country.name }} ({{ country.count }})</a></li>
+              <li style="padding-left: 10px;"><a class="btn" data-bs-toggle="collapse" href="#collapseC{{country.id}}">▼</a><a href="country/{{country.id}}"><img src="{{ country.flag_path }}" height=12></img>{{ country.name }} ({{ country.count }})</a></li>
+              <div id="collapseC{{country.id}}" class="collapse">
                 {% if country.get_regions.count > 0 %}
-                  <ul>
+                  <ul class="list-unstyled">
                     {% for region in country.get_regions %}
-                      <li><a href="region/{{region.id}}"><img src="{{ region.flag_path }}" height=12></img>{{ region.name }} ({{ region.count }})</a></li>
-                        {% if region.get_cities.count > 0 %}
-                          <ul>
-                            {% for city in region.get_cities %}
-                              <li><a href="city/{{city.id}}"><img src="{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
-                            {% endfor %}
-                          </ul>
-                        {% endif %}
+                      <li style="padding-left: 20px;"><a class="btn" data-bs-toggle="collapse" href="#collapseR{{region.id}}">▼</a><a href="region/{{region.id}}"><img src="{{ region.flag_path }}" height=12></img>{{ region.name }} ({{ region.count }})</a></li>
+                        <div id="collapseR{{region.id}}" class="collapse">
+                          {% if region.get_cities.count > 0 %}
+                            <ul class="list-unstyled">
+                              {% for city in region.get_cities %}
+                                <li style="padding-left: 60px;"><a href="city/{{city.id}}"><img src="{{ city.flag_path }}" height=12></img>{{ city.name }} ({{ city.count }})</a></li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
                     {% endfor%}
                   </ul>
                 {% else %}
@@ -40,6 +43,7 @@
                     </ul>
                   {% endif %}
                 {% endif %}
+              </div>
             {% endfor %}
           </ul>
           {% endif%}
@@ -49,15 +53,29 @@
         <a class="btn" data-bs-toggle="collapse" href="#collapseOrgs"><h2>Организаторы</h2></a>
           <div id="collapseOrgs" class="collapse">
             {% if orgs.count > 0 %}
-              <ul>
+              <ul class="list-unstyled">
                 {% for org in orgs %}
-                  <li><a href="org/{{org.id}}"><img src="{{ org.logo }}" height=12></img>{{ org.name }} ({{ org.count }})</a> <a href="{{org.website}}">website</a></li>
-                  {% if org.get_series.count > 0 %}
-                    <ul>
-                      {% for seria in org.get_series %}
-                        <li><a href="series/{{seria.id}}"><img src="{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
-                      {% endfor %}
-                    </ul>
+                  <li style="padding-left: 10px;"><a class="btn" data-bs-toggle="collapse" href="#collapseO{{org.id}}">▼</a><a href="org/{{org.id}}"><img src="{{ org.logo }}" height=12></img>{{ org.name }} ({{ org.count }})</a> <a href="{{org.website}}">website</a></li>
+                  <div id="collapseO{{org.id}}" class="collapse">
+                    {% if org.get_series.count > 0 %}
+                      <ul class="list-unstyled">
+                        {% for seria in org.get_series %}
+                          <li style="padding-left: 30px;"><a href="series/{{seria.id}}"><img src="{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if series.count > 0 %}
+              Серии забегов без организатора
+              <ul class="list-unstyled">
+                {% for seria in series %}
+                  {% if seria.logo %}
+                    <li style="padding-left: 10px;"><a href="series/{{seria.id}}"><img src="{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
+                  {% else %}
+                    <li style="padding-left: 10px;"><a href="series/{{seria.id}}">{{ seria.name }} ({{ seria.count }})</a></li>
                   {% endif %}
                 {% endfor %}
               </ul>

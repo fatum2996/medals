@@ -88,8 +88,8 @@ class Medal(models.Model):
         Series,
         chained_field = "org",
         chained_model_field = "org",
-        show_all=False,
-        auto_choose=True,
+        show_all=True,
+        auto_choose=False,
         sort=True,
         blank=True, null=True,)
     org = models.ForeignKey(Org, on_delete = models.CASCADE, blank = True, null=True)
