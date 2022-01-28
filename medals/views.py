@@ -12,7 +12,7 @@ def index(request):
     countries = Country.objects.all().order_by('-count', 'name')
     regions = Region.objects.all().order_by('-count', 'name')
     orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
-    series = Series.objects.all().order_by('-count', 'name')
+    series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
     sports = Sport.objects.all().order_by('-count', 'name')
     medals_list = Medal.objects.all().order_by('-date')
     page = request.GET.get('page', 1)

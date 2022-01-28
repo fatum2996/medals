@@ -32,7 +32,8 @@ class City(models.Model):
         chained_model_field = "country",
         show_all=False,
         auto_choose=True,
-        sort=True)
+        sort=True,
+        blank=True, null=True,)
     name = models.CharField(max_length = 200)
     count = models.IntegerField(default = 0)
     flag_path = models.ImageField(blank = True, upload_to='static/images/flags/cities')
@@ -75,12 +76,13 @@ class Medal(models.Model):
         chained_model_field = "country",
         show_all=False,
         auto_choose=True,
-        sort=True)
+        sort=True,
+        blank=True, null=True)
     city = ChainedForeignKey(
         City,
-        chained_field = "region",
-        chained_model_field = "region",
-        show_all=False,
+        chained_field = "country",
+        chained_model_field = "country",
+        show_all=True,
         auto_choose=True,
         sort=True)
     sport = models.ForeignKey(Sport, on_delete = models.CASCADE, to_field='name', default='Бег')
