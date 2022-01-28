@@ -143,3 +143,5 @@ LANGUAGE_CODE = 'ru-RU'
 
 # Пример вывода: 16 сентября 2012
 DATE_FORMAT = 'j E Y'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
