@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from .models import Country, Region, City, Org, Series, Sport, Medal
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from .forms import SignUpForm
 # Create your views here.
 
 def search(request):
@@ -62,3 +65,17 @@ def sport(request, id):
 
 def about(request):
     return HttpResponse("Сайт о спортивных медалях")
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'medals/signup.html', {'form': form})

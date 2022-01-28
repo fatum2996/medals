@@ -19,13 +19,12 @@
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Page 1</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Page 2</a></li>
+            <li class="nav-item"><a href="О проекте" class="nav-link">about</a></li>
+            <li class="nav-item"><a href="Регистрация" class="nav-link">Sign Up</a></li>
           </ul>
-          <form class="d-flex" action="{% url 'search' %}">
-            <input name="q" type="text" class="form-control" placeholder="Search" class="form-control me-2">
-            <button type="button" class="btn btn-default">Submit</button>
+          <form class="d-flex" action="{% url 'search' %}" autocomplete="off">
+            <input name="q" type="text" class="form-control" placeholder="..." class="form-control me-2">
+            <button type="button" class="btn btn-default">Поиск</button>
           </form>
         </div>
       </div>

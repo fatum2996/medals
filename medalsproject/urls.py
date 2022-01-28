@@ -28,5 +28,6 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('admin/', admin.site.urls),
     path('chaining/', include('smart_selects.urls')),
-    path('search', views.search, name='search')
+    path('search', views.search, name='search'),
+    path('signup', views.signup, name='signup')
 ]
