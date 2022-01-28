@@ -7,3 +7,19 @@
 .card-img-top {
   border-radius: 23px;
 }
+
+.search-box .btn span {
+	transform: scale(0.9);
+	display: inline-block;
+}
+
+@media (min-width: 992px){
+	.form-inline .input-group .form-control {
+		width: 225px;
+	}
+}
+@media (max-width: 992px){
+	.form-inline {
+		display: block;
+	}
+}

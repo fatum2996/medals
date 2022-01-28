@@ -11,6 +11,25 @@
     <title>Медали в спорте</title>
   </head>
   <body>
+    <nav class="navbar navbar-expand-sm navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">WebSiteName</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Page 1</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Page 2</a></li>
+          </ul>
+          <form class="d-flex" action="{% url 'search' %}">
+            <input name="q" type="text" class="form-control" placeholder="Search" class="form-control me-2">
+            <button type="button" class="btn btn-default">Submit</button>
+          </form>
+        </div>
+      </div>
+    </nav>
     <div class="row d-flex justify-content-center">
       <div class="col-sm-3">
         <a class="btn" data-bs-toggle="collapse" href="#collapseCountries"><h2>Страны</h2></a>

@@ -6,7 +6,10 @@ from django.db.models import Q
 from .models import Country, Region, City, Org, Series, Sport, Medal
 # Create your views here.
 
-
+def search(request):
+    query = request.GET.get('q')
+    medals = Medal.objects.filter(name__icontains=query).order_by('-date')
+    return render(request, 'medals/search.html', context={"medals" : medals})
 
 def index(request):
     countries = Country.objects.all().order_by('-count', 'name')
