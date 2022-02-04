@@ -20,7 +20,13 @@
         <div class="collapse navbar-collapse" id="mynavbar">
           <ul class="navbar-nav me-auto">
             <li class="nav-item"><a href="about" class="nav-link">О проекте</a></li>
-            <li class="nav-item"><a href="signup" class="nav-link">Регистрация</a></li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">Привет, {{ user.username }} <a href="{% url 'logout' %}">Выйти</a></li>
+            {% else %}
+              <li class="nav-item"><a href="signup" class="nav-link">Регистрация</a></li>
+              <li class="nav-item"><a href="accounts/login" class="nav-link">Войти</a></li>
+            {% endif %}
+            <li class="nav-item"><a href="add" class="nav-link">Добавить медаль</a></li>
           </ul>
           <form class="d-flex" action="{% url 'search' %}" autocomplete="off">
             <input name="q" type="text" class="form-control" placeholder="..." class="form-control me-2">

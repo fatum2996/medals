@@ -145,3 +145,6 @@ LANGUAGE_CODE = 'ru-RU'
 DATE_FORMAT = 'j E Y'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

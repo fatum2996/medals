@@ -32,4 +32,5 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('account_activation_sent', views.account_activation_sent, name='account_activation_sent'),
     path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
+    path('accounts/', include('django.contrib.auth.urls')), 
 ]
