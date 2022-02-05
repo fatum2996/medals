@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from medals import views
-
+from medals.views import CreateMedalView
 urlpatterns = [
     path('', views.index, name='index'),
     path('country/<int:id>', views.country),
@@ -32,5 +32,6 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('account_activation_sent', views.account_activation_sent, name='account_activation_sent'),
     path('activate/<slug:uidb64>/<slug:token>/', views.activate, name='activate'),
-    path('accounts/', include('django.contrib.auth.urls')), 
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('add/', CreateMedalView.as_view(), name='add_medal')
 ]

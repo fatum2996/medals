@@ -7,11 +7,14 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views.generic import CreateView
 
-from .forms import SignUpForm
-from .models import Country, Region, City, Org, Series, Sport, Medal
+
+from .forms import MedalForm, SignUpForm
+from .models import Country, Region, City, Org, Series, Sport, Medal, Medal_To_Moderate
 from .tokens import account_activation_token
 # Create your views here.
 
@@ -111,3 +114,9 @@ def activate(request, uidb64, token):
         return redirect('index')
     else:
         return render(request, 'account_activation_invalid.html')
+
+class CreateMedalView(CreateView):
+    model = Medal_To_Moderate
+    form_class = MedalForm
+    template_name = "medals/add.html"
+    success_url = reverse_lazy('index')

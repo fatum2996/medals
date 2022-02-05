@@ -70,6 +70,17 @@ class Sport(models.Model):
     def __str__(self):
         return self.name
 
+class Medal_To_Moderate(models.Model):
+    name = models.CharField(max_length = 200)
+    photo = models.ImageField(upload_to='static/images/medals/')
+    photo_second = models.ImageField(blank = True, upload_to='static/images/medals')
+    location = models.CharField(max_length = 200)
+    org = models.CharField(max_length = 200, blank=True)
+    added_by = models.CharField(blank = True, max_length = 200)
+    credentials = models.CharField(blank = True, max_length = 200)
+    def __str__(self):
+        return self.name
+
 class Medal(models.Model):
     country = models.ForeignKey(Country, on_delete = models.CASCADE)
     region = ChainedForeignKey(
