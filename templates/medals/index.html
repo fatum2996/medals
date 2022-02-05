@@ -26,7 +26,7 @@
             {% else %}
               <li class="nav-item"><a href="signup" class="nav-link">Регистрация</a></li>
               <li class="nav-item"><a href="accounts/login" class="nav-link">Войти</a></li>
-            {% endif %}            
+            {% endif %}
           </ul>
           <form class="d-flex" action="{% url 'search' %}" autocomplete="off">
             <input name="q" type="text" class="form-control" placeholder="..." class="form-control me-2">
@@ -184,5 +184,6 @@
             }
         });
     </script>
+    <script type="text/javascript" src="/js/maintainscroll.jquery.min.js"></script>
   </body>
 </html>
