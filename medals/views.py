@@ -20,7 +20,7 @@ from .tokens import account_activation_token
 
 def search(request):
     query = request.GET.get('q')
-    medals_list = Medal.objects.filter(Q(name__icontains=query)).order_by('-date')
+    medals_list = Medal.objects.filter(Q(name_lower__icontains=query.lower())).order_by('-date')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
     try:

@@ -109,6 +109,7 @@ class Medal(models.Model):
         blank=True, null=True,)
     org = models.ForeignKey(Org, on_delete = models.CASCADE, blank = True, null=True)
     name = models.CharField(max_length = 200)
+    name_lower = models.CharField(max_length = 200, editable=False, default="")
     date_added = models.DateField(auto_now = True)
     date = models.DateField(auto_now = False)
     distance = models.CharField(blank = True, max_length = 15)
@@ -147,7 +148,7 @@ class Medal(models.Model):
                 sport_inc = Sport.objects.get(name = self.sport)
                 sport_inc.count += 1
                 sport_inc.save()
-
+        self.name_lower = self.name.lower()
         super().save(*args, **kwargs)  # Call the "real" save() method.
 
     def __str__(self):
