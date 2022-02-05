@@ -20,7 +20,15 @@ from .tokens import account_activation_token
 
 def search(request):
     query = request.GET.get('q')
-    medals = Medal.objects.filter(name__icontains=query).order_by('-date')
+    medals_list = Medal.objects.filter(Q(name__icontains=query)).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/search.html', context={"medals" : medals})
 
 def index(request):
@@ -52,33 +60,73 @@ def country(request, id):
         medals = paginator.page(1)
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
-    print(medals)        
+    print(medals)
     return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals})
 
 def region(request, id):
     region = Region.objects.get(id=id)
-    medals = Medal.objects.filter(region = id).order_by('-date')
+    medals_list = Medal.objects.filter(region = id).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/region.html', context={"region": region, "medals": medals})
 
 def org(request, id):
     org = Org.objects.get(id=id)
-    medals = Medal.objects.filter(org = id).order_by('-date')
+    medals_list = Medal.objects.filter(org = id).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/org.html', context={"org": org, "medals": medals})
 
 def city(request, id):
     #try:
     city = City.objects.get(id=id)
-    medals = Medal.objects.filter(city = id).order_by('-date')
+    medals_list = Medal.objects.filter(city = id).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/city.html', context={"city": city, "medals": medals})
 
 def series(request, id):
     seria = Series.objects.get(id=id)
-    medals = Medal.objects.filter(series = id).order_by('-date')
+    medals_list = Medal.objects.filter(series = id).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/series.html', context={"seria": seria, "medals": medals})
 
 def sport(request, id):
     sport = Sport.objects.get(id=id)
-    medals = Medal.objects.filter(sport = sport.name).order_by('-date')
+    medals_list = Medal.objects.filter(sport = sport.name).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
     return render(request, 'medals/sport.html', context={"sport": sport, "medals": medals})
 
 def about(request):

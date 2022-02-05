@@ -14,7 +14,6 @@
   {% endif %}
 
 <h2>Медали</h2>
-{% if medals.count > 0 %}
   {% for medal in medals %}
       <div>
         <img src="../{{ medal.photo}}" alt="" height=250>
@@ -23,6 +22,22 @@
         <p>{{medal.sport}}, {{medal.distance}}</p>
       </div>
   {% endfor %}
-{% endif %}
+  <div class="pagination">
+      <span class="step-links">
+          {% if medals.has_previous %}
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ medals.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+              Page {{ medals.number }} of {{ medals.paginator.num_pages }}.
+          </span>
+
+          {% if medals.has_next %}
+              <a href="?page={{ medals.next_page_number }}">next</a>
+              <a href="?page={{ medals.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+      </span>
+  </div>  
 </body>
 </html>
