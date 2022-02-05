@@ -43,7 +43,16 @@ def index(request):
 def country(request, id):
     country = Country.objects.get(id=id)
     regions = Region.objects.filter(country = id)
-    medals = Medal.objects.filter(country = id).order_by('-date')
+    medals_list = Medal.objects.filter(country = id).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(medals_list, 20)
+    try:
+        medals = paginator.page(page)
+    except PageNotAnInteger:
+        medals = paginator.page(1)
+    except EmptyPage:
+        medals = paginator.page(paginator.num_pages)
+    print(medals)        
     return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals})
 
 def region(request, id):
