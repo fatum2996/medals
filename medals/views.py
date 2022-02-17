@@ -1,5 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -14,7 +15,7 @@ from django.views.generic import CreateView
 
 
 from .forms import MedalForm, SignUpForm
-from .models import Country, Region, City, Org, Series, Sport, Medal, Medal_To_Moderate
+from .models import Country, Region, City, Org, Series, Sport, Medal, Medal_To_Moderate, Profile
 from .tokens import account_activation_token
 # Create your views here.
 
@@ -172,8 +173,12 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'account_activation_invalid.html')
 
-class CreateMedalView(CreateView):
+class CreateMedalView(LoginRequiredMixin, CreateView):
     model = Medal_To_Moderate
     form_class = MedalForm
     template_name = "medals/add.html"
     success_url = reverse_lazy('index')
+    def form_valid(self, form):
+        print(self.request.user.user_profile.user)
+        form.instance.added_by = self.request.user.user_profile
+        return super().form_valid(form)

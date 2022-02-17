@@ -1,6 +1,14 @@
-<h1>Add medal page</h1>
+{% extends 'medals/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>Добавить медаль</h1>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit New Medal</button>
+  {{ form|crispy }}
+  <button type="submit">Отправить</button>
 </form>
+<br>
+<p>* Обязательные поля</p>
+{% endblock %}

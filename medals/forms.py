@@ -17,3 +17,10 @@ class MedalForm(forms.ModelForm):
     class Meta:
         model = Medal_To_Moderate
         fields = ['name', 'photo', 'photo_second', 'location', 'org']
+        labels = {
+            "name": "Название соревнования",
+            "photo": "Фото медали",
+            "photo_second": "Фото реверса",
+            "location": "Место проведения (город)",
+            "org": "Организатор",
+        }

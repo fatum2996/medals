@@ -70,13 +70,25 @@ class Sport(models.Model):
     def __str__(self):
         return self.name
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, related_name="user_profile", on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
+    def __str__(self):
+        return self.user.username
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
+
 class Medal_To_Moderate(models.Model):
     name = models.CharField(max_length = 200)
     photo = models.ImageField(upload_to='static/images/medals/')
     photo_second = models.ImageField(blank = True, upload_to='static/images/medals')
     location = models.CharField(max_length = 200)
     org = models.CharField(max_length = 200, blank=True)
-    added_by = models.CharField(blank = True, max_length = 200)
+    added_by = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     credentials = models.CharField(blank = True, max_length = 200)
     def __str__(self):
         return self.name
@@ -186,13 +198,3 @@ def deleter(sender, **kwargs):
     pass
 
 pre_delete.connect(deleter, sender=Medal)
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email_confirmed = models.BooleanField(default=False)
-
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
