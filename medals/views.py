@@ -88,8 +88,8 @@ def region(request, id):
 def org(request, id):
     countries = Country.objects.all().order_by('-count', 'name')
     regions = Region.objects.all().order_by('-count', 'name')
-    orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
     series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
+    series_of_org = Series.objects.filter(org = id).order_by('-count', 'name')
     sports = Sport.objects.all().order_by('-count', 'name')
     org = Org.objects.get(id=id)
     medals_list = Medal.objects.filter(org = id).order_by('-date')
@@ -101,7 +101,7 @@ def org(request, id):
         medals = paginator.page(1)
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
-    return render(request, 'medals/org.html', context={"org": org, "medals": medals, "countries": countries, "regions": regions, "orgs": orgs, "series": series, "sports": sports})
+    return render(request, 'medals/org.html', context={"org": org, "medals": medals, "countries": countries, "regions": regions, "series": series, "sports": sports, "series_of_org": series_of_org})
 
 def city(request, id):
     orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')

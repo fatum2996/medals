@@ -111,7 +111,7 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <a class="btn" data-bs-toggle="collapse" href="#collapseOrgs"><h2>Организаторы</h2></a>
+        <a class="btn" data-bs-toggle="collapse" href="#collapseOrgs"><h2>{% if orgs.count > 0 %}Организаторы{% else %}Серии{% endif %}</h2></a>
           <div id="collapseOrgs" class="collapse">
             {% if orgs.count > 0 %}
               <ul class="list-unstyled">
@@ -128,15 +128,22 @@
                   </div>
                 {% endfor %}
               </ul>
-            {% endif %}
-            {% if series.count > 0 %}
-              Серии забегов без организатора
+              {% if series.count > 0 %}
+                Серии забегов без организатора
+                <ul class="list-unstyled">
+                  {% for seria in series %}
+                    <li style="padding-left: 10px;"><a href="../series/{{seria.id}}">{% if seria.logo %}<img src="../{{ seria.logo }}" height=12></img>{% endif %}{{ seria.name }} ({{ seria.count }})</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            {% else %}
               <ul class="list-unstyled">
-                {% for seria in series %}
+                {% for seria in series_of_org %}
                   <li style="padding-left: 10px;"><a href="../series/{{seria.id}}">{% if seria.logo %}<img src="../{{ seria.logo }}" height=12></img>{% endif %}{{ seria.name }} ({{ seria.count }})</a></li>
                 {% endfor %}
               </ul>
             {% endif %}
+
           </div>
       </div>
       <div class="col-sm-3">
