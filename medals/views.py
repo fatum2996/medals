@@ -51,7 +51,10 @@ def index(request):
 
 def country(request, id):
     country = Country.objects.get(id=id)
-    regions = Region.objects.filter(country = id)
+    regions = Region.objects.filter(country = id).order_by('-count', 'name')
+    orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
+    series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
+    sports = Sport.objects.all().order_by('-count', 'name')
     medals_list = Medal.objects.filter(country = id).order_by('-date')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
@@ -62,7 +65,7 @@ def country(request, id):
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
     print(medals)
-    return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals})
+    return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals, "orgs": orgs, "sports": sports, "series": series})
 
 def region(request, id):
     region = Region.objects.get(id=id)
@@ -91,8 +94,11 @@ def org(request, id):
     return render(request, 'medals/org.html', context={"org": org, "medals": medals})
 
 def city(request, id):
-    #try:
+    orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
+    series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
+    sports = Sport.objects.all().order_by('-count', 'name')
     city = City.objects.get(id=id)
+    cities = City.objects.filter(region = city.region.id).order_by('-count', 'name')
     medals_list = Medal.objects.filter(city = id).order_by('-date')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
@@ -102,7 +108,7 @@ def city(request, id):
         medals = paginator.page(1)
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
-    return render(request, 'medals/city.html', context={"city": city, "medals": medals})
+    return render(request, 'medals/city.html', context={"city": city, "medals": medals, "orgs": orgs, "sports": sports, "series": series, "cities": cities})
 
 def series(request, id):
     seria = Series.objects.get(id=id)
@@ -179,6 +185,6 @@ class CreateMedalView(LoginRequiredMixin, CreateView):
     template_name = "medals/add.html"
     success_url = reverse_lazy('index')
     def form_valid(self, form):
-        print(self.request.user.user_profile.user)
-        form.instance.added_by = self.request.user.user_profile
+        print(self.request.user.profile.user)
+        form.instance.added_by = self.request.user.profile
         return super().form_valid(form)

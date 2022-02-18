@@ -71,7 +71,7 @@ class Sport(models.Model):
         return self.name
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, related_name="user_profile", on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
     email_confirmed = models.BooleanField(default=False)
     def __str__(self):
         return self.user.username
@@ -80,7 +80,7 @@ class Profile(models.Model):
 def update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
-    instance.profile.save()
+        instance.profile.save()
 
 class Medal_To_Moderate(models.Model):
     name = models.CharField(max_length = 200)
