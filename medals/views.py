@@ -71,6 +71,10 @@ def country(request, id):
 def region(request, id):
     region = Region.objects.get(id=id)
     medals_list = Medal.objects.filter(region = id).order_by('-date')
+    cities = City.objects.filter(region = id).order_by('-count', 'name')
+    orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
+    series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
+    sports = Sport.objects.all().order_by('-count', 'name')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
     try:
@@ -79,7 +83,7 @@ def region(request, id):
         medals = paginator.page(1)
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
-    return render(request, 'medals/region.html', context={"region": region, "medals": medals})
+    return render(request, 'medals/region.html', context={"region": region, "medals": medals, "cities": cities, "orgs": orgs, "series": series, "sports":sports})
 
 def org(request, id):
     countries = Country.objects.all().order_by('-count', 'name')
