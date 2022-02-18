@@ -121,7 +121,12 @@ def city(request, id):
     return render(request, 'medals/city.html', context={"city": city, "medals": medals, "orgs": orgs, "sports": sports, "series": series, "cities": cities})
 
 def series(request, id):
+    countries = Country.objects.all().order_by('-count', 'name')
+    regions = Region.objects.all().order_by('-count', 'name')
     seria = Series.objects.get(id=id)
+    series_of_org = Series.objects.filter(org = seria.org).order_by('-count', 'name')
+    sports = Sport.objects.all().order_by('-count', 'name')
+    org = Org.objects.get(id=seria.org.id)
     medals_list = Medal.objects.filter(series = id).order_by('-date')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
@@ -131,7 +136,7 @@ def series(request, id):
         medals = paginator.page(1)
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
-    return render(request, 'medals/series.html', context={"seria": seria, "medals": medals})
+    return render(request, 'medals/series.html', context={"seria": seria, "medals": medals, "countries": countries, "regions": regions, "series_of_org":series_of_org, "org":org})
 
 def sport(request, id):
     sport = Sport.objects.get(id=id)

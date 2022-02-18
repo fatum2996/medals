@@ -111,7 +111,7 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <a class="btn" data-bs-toggle="collapse" href="#collapseOrgs"><h2>{% if orgs.count > 0 %}Организаторы{% else %}Серии{% endif %}</h2></a>
+        <a class="btn" data-bs-toggle="collapse" href="#collapseOrgs"><h2>{% if orgs.count > 0 %}Организаторы{% else %}{% if seria %}{% if org.logo %}<img src="../{{ org.logo }}" height=40></img>{% endif %}{{org.name}}{% else %}Серии{% endif %}{% endif %}</h2></a>
           <div id="collapseOrgs" class="collapse">
             {% if orgs.count > 0 %}
               <ul class="list-unstyled">
