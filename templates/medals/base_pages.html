@@ -116,20 +116,12 @@
             {% if orgs.count > 0 %}
               <ul class="list-unstyled">
                 {% for org in orgs %}
-                  {% if org.logo %}
-                    <li style="padding-left: 10px;"><a class="btn" data-bs-toggle="collapse" href="#collapseO{{org.id}}">▼</a><a href="../org/{{org.id}}"><img src="../{{ org.logo }}" height=12></img>{{ org.name }} ({{ org.count }})</a> <a href="../{{org.website}}">website</a></li>
-                  {% else %}
-                    <li style="padding-left: 10px;"><a class="btn" data-bs-toggle="collapse" href="#collapseO{{org.id}}">▼</a><a href="../org/{{org.id}}">{{ org.name }} ({{ org.count }})</a> <a href="../{{org.website}}">website</a></li>
-                  {% endif%}
+                  <li style="padding-left: 10px;"><a class="btn" data-bs-toggle="collapse" href="#collapseO{{org.id}}">▼</a><a href="../org/{{org.id}}">{% if org.logo %}<img src="../{{ org.logo }}" height=12></img>{% endif %}{{ org.name }} ({{ org.count }})</a> <a href="../{{org.website}}">website</a></li>
                   <div id="collapseO{{org.id}}" class="collapse">
                     {% if org.get_series.count > 0 %}
                       <ul class="list-unstyled">
                         {% for seria in org.get_series %}
-                          {% if seria.logo %}
-                            <li style="padding-left: 30px;"><a href="../series/{{seria.id}}"><img src="../{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
-                          {% else %}
-                            <li style="padding-left: 30px;"><a href="../series/{{seria.id}}">{{ seria.name }} ({{ seria.count }})</a></li>
-                          {% endif %}
+                          <li style="padding-left: 30px;"><a href="../series/{{seria.id}}">{% if seria.logo %}<img src="../{{ seria.logo }}" height=12></img>{% endif %}{{ seria.name }} ({{ seria.count }})</a></li>
                         {% endfor %}
                       </ul>
                     {% endif %}
@@ -141,11 +133,7 @@
               Серии забегов без организатора
               <ul class="list-unstyled">
                 {% for seria in series %}
-                  {% if seria.logo %}
-                    <li style="padding-left: 10px;"><a href="../series/{{seria.id}}"><img src="../{{ seria.logo }}" height=12></img>{{ seria.name }} ({{ seria.count }})</a></li>
-                  {% else %}
-                    <li style="padding-left: 10px;"><a href="../series/{{seria.id}}">{{ seria.name }} ({{ seria.count }})</a></li>
-                  {% endif %}
+                  <li style="padding-left: 10px;"><a href="../series/{{seria.id}}">{% if seria.logo %}<img src="../{{ seria.logo }}" height=12></img>{% endif %}{{ seria.name }} ({{ seria.count }})</a></li>
                 {% endfor %}
               </ul>
             {% endif %}
