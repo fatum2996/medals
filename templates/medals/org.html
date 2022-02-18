@@ -6,6 +6,8 @@
 
 {% block content %}
 <div class="d-flex justify-content-center">
-  <h2><img src="../{{ org.logo }}" height=50></img>{{org.name}}</h2>
+
+  <h2>{% if org.logo %}<img src="../{{ org.logo }}" height=50></img>{% endif %}{{org.name}}</h2>
+
 </div>
 {% endblock %}
