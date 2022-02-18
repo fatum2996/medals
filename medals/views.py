@@ -52,6 +52,7 @@ def index(request):
 def country(request, id):
     country = Country.objects.get(id=id)
     regions = Region.objects.filter(country = id).order_by('-count', 'name')
+    cities = City.objects.filter(country = id).order_by('-count', 'name')
     orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
     series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
     sports = Sport.objects.all().order_by('-count', 'name')
@@ -65,7 +66,7 @@ def country(request, id):
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
     print(medals)
-    return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals, "orgs": orgs, "sports": sports, "series": series})
+    return render(request, 'medals/country.html', context={"country": country, "regions": regions, "medals": medals, "orgs": orgs, "sports": sports, "series": series, "cities": cities})
 
 def region(request, id):
     region = Region.objects.get(id=id)

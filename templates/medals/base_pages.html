@@ -38,7 +38,17 @@
     </nav>
     <div class="row d-flex justify-content-center" style="width:100%">
       <div class="col-sm-3">
-        <a class="btn" data-bs-toggle="collapse" href="#collapseCountries"><h2>{% block countries_title %}{% endblock %}</h2></a>
+        <a class="btn" data-bs-toggle="collapse" href="#collapseCountries"><h2>
+          {% if countries.count > 0 %}
+            Страны
+          {% else %}
+            {% if regions.count > 0 %}
+              Регионы
+            {% else %}
+              Города
+            {% endif %}
+          {% endif %}
+        </h2></a>
         <div id="collapseCountries" class="collapse">
           {% if countries.count > 0 %}
             <ul class="list-unstyled">
