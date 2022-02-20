@@ -35,3 +35,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('add/', CreateMedalView.as_view(), name='add_medal')
 ]
+
+handler404 = "medals.views.page_not_found_view"

@@ -1,7 +1,19 @@
-<!-- templates/registration/login.html -->
-<h2>Log In</h2>
+{% extends '../medals/base_small.html' %}
+
+{% load crispy_forms_tags %}
+{% block style %}
+<style>
+  .asteriskField {
+    display: none;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Войти</h2>
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  {{ form|crispy }}
   <button type="submit">Log In</button>
 </form>
+{% endblock %}

@@ -123,10 +123,18 @@ def city(request, id):
 def series(request, id):
     countries = Country.objects.all().order_by('-count', 'name')
     regions = Region.objects.all().order_by('-count', 'name')
-    seria = Series.objects.get(id=id)
-    series_of_org = Series.objects.filter(org = seria.org).order_by('-count', 'name')
+    try:
+        seria = Series.objects.get(id=id)
+    except Series.DoesNotExist:
+        raise Http404("seria doesn't exist")
+        return render(request, 'medals/404.html')
     sports = Sport.objects.all().order_by('-count', 'name')
-    org = Org.objects.get(id=seria.org.id)
+    if seria.org:
+        series_of_org = Series.objects.filter(org = seria.org).order_by('-count', 'name')
+        org = Org.objects.get(id=seria.org.id)
+    else:
+        series_of_org = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
+        org = Org.objects.get(id=37)
     medals_list = Medal.objects.filter(series = id).order_by('-date')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
@@ -141,6 +149,11 @@ def series(request, id):
 def sport(request, id):
     sport = Sport.objects.get(id=id)
     medals_list = Medal.objects.filter(sport = sport.name).order_by('-date')
+    countries = Country.objects.all().order_by('-count', 'name')
+    regions = Region.objects.all().order_by('-count', 'name')
+    orgs = Org.objects.exclude(name = "No").order_by('-count', 'name')
+    series = Series.objects.filter(Q(org__isnull = True) | Q(org__name = 'No')).order_by('-count', 'name')
+    sports = Sport.objects.all().order_by('-count', 'name')
     page = request.GET.get('page', 1)
     paginator = Paginator(medals_list, 20)
     try:
@@ -149,10 +162,10 @@ def sport(request, id):
         medals = paginator.page(1)
     except EmptyPage:
         medals = paginator.page(paginator.num_pages)
-    return render(request, 'medals/sport.html', context={"sport": sport, "medals": medals})
+    return render(request, 'medals/sport.html', context={"sport": sport, "medals": medals, "countries":countries, "regions":regions, "orgs": orgs, "sports":sports })
 
 def about(request):
-    return HttpResponse("Сайт о спортивных медалях")
+    return render(request, 'medals/about.html')
 
 def account_activation_sent(request):
     return HttpResponse("Подтвердите email")
@@ -203,3 +216,6 @@ class CreateMedalView(LoginRequiredMixin, CreateView):
         print(self.request.user.profile.user)
         form.instance.added_by = self.request.user.profile
         return super().form_valid(form)
+
+def page_not_found_view(request, exception):
+    return render(request, "medals/404.html", status=404)
