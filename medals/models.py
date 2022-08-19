@@ -130,7 +130,13 @@ class Medal(models.Model):
     likes = models.IntegerField(default = 0)
     added_by = models.CharField(blank = True, max_length = 200, default='fatum')
     credentials = models.CharField(blank = True, max_length = 200, default='@fa_tum')
-
+    
+    def photo_creator(self):
+        if(self.credentials=='@fa_tum'):
+            return ""
+        else:
+            return self.credentials
+        
     def save(self, *args, **kwargs): #прописать вычитание при удалении!!!!
         if self._state.adding:
             country_inc = Country.objects.get(name = self.country)

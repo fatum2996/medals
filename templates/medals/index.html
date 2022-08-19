@@ -156,8 +156,8 @@
                   <div>
                     <h4 class="card-title">{{medal.name}}</h4>
                     <p class="card-text">{{medal.date}}, <a href="country/{{medal.country_id}}">{{medal.country}}</a>, <a href="city/{{medal.city_id}}">{{medal.city}}</a>, <a href="sport/{{medal.sport.id}}">{{medal.sport}}</a>{% if medal.org and medal.org.name != "No" %},<br> <a href="org/{{medal.org_id}}">{{medal.org}}</a>{% endif %}{% if medal.series  %}, <a href="series/{{medal.series_id}}">{{medal.series}}</a>{% endif %}{% if medal.distance %}, {{medal.distance}}{% endif %}.
-                      {% if medal.added_by != "fatum" %}Добавил {{medal.added_by}}{% endif %}
-                      {% if medal.credentials != "@fa_tum" %}Фото {{medal.credentials}}{% endif %}
+                      {% if medal.added_by != "fatum" %}Добавил {{medal.added_by}}<br>{% endif %}
+                      {% if medal.photo_creator %}Фото {{medal.credentials}}{% endif %}
                     </p>
                   </div>
                 </div>
